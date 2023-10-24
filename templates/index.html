@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        <title>Routes</title>
+        <link rel="stylesheet" type="text/css" href="../static/css/styles.css" />
+        <link
+                rel="stylesheet"
+                type="text/css"
+                href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+    </head>
+    <body>
+
+        <div class="container" id="input-container">
+            <form action="/geomap" method="get">
+                <label for="fruits">Select a fruit:</label>
+                <select id="fruits" name="fruits">
+                    <option value="apple">Apple</option>
+                    <option value="banana">Banana</option>
+                    <option value="cherry">Cherry</option>
+                    <option value="date">Date</option>
+                    <option value="grape">Grape</option>
+                </select>
+                <div id="formfield">
+                    <input type="text" name="arrivaldeparture" class="text" placeholder="Departure" required autocomplete="off">
+                    <input type="text" name="arrivaldeparture" class="text" placeholder="Arrival" required autocomplete="off">
+                </div>
+                <input name="submit" type="Submit" value="Submit">
+            </form>
+            <div class="controls">
+                <button class="add" onclick="add()"><i class="fa fa-plus"></i>Add</button>
+                <button class="remove" onclick="remove()"><i class="fa fa-minus"></i>Remove</button>
+            </div>
+            <ol id="airport-list"></ol>
+        </div>
+        <script src="../static/js/search_autocomplete.js"></script>
+        <script src="../static/js/add_remove_buttons.js"></script>
+    <img src="../static/media/demo_map.png" alt="Map" class="center">
+    </body>
+</html>
