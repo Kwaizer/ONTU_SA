@@ -1,13 +1,12 @@
 from mpl_toolkits.basemap import Basemap
 from py_scripts.calculate_distance import find_distance_between_two_cities
-import numpy as np
 import matplotlib.pyplot as plt
 import sqlite3
 plt.switch_backend('agg')
 
 
-def create_routes(user_input):
-
+def distance_for_page(user_input):
+    distances_text = []
     con = sqlite3.connect("airports.db")
     cur = con.cursor()
 
@@ -23,7 +22,6 @@ def create_routes(user_input):
 
     # ADD a connection between cities
     network = [(user_input[i], user_input[i + 1]) for i in range(0, len(user_input), 2)]
-    # print(network)
     # Create a set of unique cities from user_input
     if len(network) > 1:
         # Create an empty set to store unique cities
@@ -47,7 +45,6 @@ def create_routes(user_input):
     # Create a dictionary from the fetched data
     city_coordinates = {row[3]: (float(row[1]), float(row[2])) for row in rows}
     for source, target in network:
-
         lat1, lon1 = city_coordinates[source]
         x, y = m(lon1, lat1)
         plt.text(x, y, source, fontsize=8, ha='center', va='bottom', color='black')
@@ -58,28 +55,8 @@ def create_routes(user_input):
         # Calculate the distance using geopy
         distance = find_distance_between_two_cities(lat1, lon1, lat2, lon2)
 
-        # cut the extra line when routes crosses borders of the map
-        line, = m.drawgreatcircle(lon1, lat1, lon2, lat2, lw=1)
+        # Create the distance text and append it to the list
+        distance_text = f"{source} -> {target}: {distance:.2f} km"
+        distances_text.append(distance_text)
 
-        p = line.get_path()
-        # find the index which crosses the dateline (the delta is large)
-        cut_point = np.where(np.abs(np.diff(p.vertices[:, 0])) > 200)[0]
-        if cut_point:
-            cut_point = cut_point[0]
-
-            # create new vertices with a nan inbetween and set those as the path's vertices
-            new_verts = np.concatenate(
-                [p.vertices[:cut_point, :],
-                 [[np.nan, np.nan]],
-                 p.vertices[cut_point + 1:, :]]
-            )
-            p.codes = None
-            p.vertices = new_verts
-
-        # Display the distance on the map
-        plt.text((lon1 + lon2) / 2, (lat1 + lat2) / 2, f'{distance:.2f} km', fontsize=8, ha='center', va='top',
-                 color='red')
-    # Save the plot as an image
-    plt.savefig('static/media/map.png', bbox_inches='tight')
-    # Show the HTML file path
-    print("Map saved as 'index.html'")
+    return distances_text

@@ -3,10 +3,19 @@ body {
   font-family: 'Jost',sans-serif;
   color: #fff;
 }
-h1 {
+ul {
   text-align: center;
-  font-size: 48px;
+}
+label {
+  color: #232c3d;;
+}
+h1, h2 {
+  text-align: center;
+  font-size: 28px;
   color: #232c3d;
+}
+.date{
+  margin-top: 10px;
 }
 .center {
   display: block;

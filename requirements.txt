@@ -1,4 +1,7 @@
-Flask
-Matplotlib
-Numpy
-Geopy
+Flask~=2.3.3
+Matplotlib~=3.7.3
+Numpy~=1.25.2
+Geopy~=2.4.0
+
+pytz~=2023.3.post1
+timezonefinder~=6.2.0

@@ -14,16 +14,15 @@
     <body>
 
         <div class="container" id="input-container">
-            <form action="/geomap" method="get">
-                <label for="fruits">Select a fruit:</label>
-                <select id="fruits" name="fruits">
-                    <option value="apple">Apple</option>
-                    <option value="banana">Banana</option>
-                    <option value="cherry">Cherry</option>
-                    <option value="date">Date</option>
-                    <option value="grape">Grape</option>
+            <form style="text-align: center;" action="/geomap" method="get">
+                <label for="planes">Select an aircraft:</label>
+                <select id="planes" name="planes">
+                    {% for aircraft in aircraft_names %}
+                        <option value="{{ aircraft }}">{{ aircraft }}</option>
+                    {% endfor %}
                 </select>
                 <div id="formfield">
+                    <input class="date" type="datetime-local" name="flight_datetime" required>
                     <input type="text" name="arrivaldeparture" class="text" placeholder="Departure" required autocomplete="off">
                     <input type="text" name="arrivaldeparture" class="text" placeholder="Arrival" required autocomplete="off">
                 </div>
